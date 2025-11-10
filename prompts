@@ -1,0 +1,12 @@
+task :  Create an E-commerce website that enables users to explore products, view product details, and manage a shopping cart.
+the site should have a clean and responsive, UI, a lightweight backend to handle data operations, and basic state management for cart functionality.
+
+Tech stack: for frontend use React.js & react router for navigation
+for backend use node.js with Express.js
+& for database use MongoDB Atlas.
+
+yes please give the navbar and other components
+
+give me some dummy products to add into backend
+
+please also provide with relevant links for products.js
