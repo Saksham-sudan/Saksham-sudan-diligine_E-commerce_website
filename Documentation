@@ -1,0 +1,160 @@
+Project: MERN E-Commerce Site (v1.0)
+1. 📖 Project Overview
+This document outlines the technical architecture for a lightweight, MERN-stack e-commerce application. The system allows users to browse a list of products, view details for a specific product, and manage a shopping cart.
+
+The application is built with a decoupled architecture:
+
+Backend: A Node.js/Express API responsible for database operations and serving product data.
+
+Frontend: A React single-page application (SPA) that provides a clean, responsive UI and handles all user interaction and state.
+
+2. ⚙️ Technology Stack
+Category	Technology	Purpose
+Backend	Node.js	JavaScript runtime environment for the server.
+Express.js	Server framework for building the REST API.
+Mongoose	Object Data Modeler (ODM) for MongoDB.
+CORS	Middleware to enable Cross-Origin Resource Sharing.
+Dotenv	Module to manage environment variables.
+Frontend	React.js	Library for building the user interface.
+React Router DOM	Client-side routing for page navigation.
+Axios	HTTP client for making requests to the backend API.
+Database	MongoDB Atlas	Cloud-hosted NoSQL database.
+State	React Context API	Global state management for the shopping cart.
+
+Export to Sheets
+
+3. 🗂️ Project Structure
+The project is organized into two primary folders, backend and frontend.
+
+ecommerce-project/
+├── backend/
+│   ├── models/
+│   │   └── product.model.js    # Mongoose schema for Products
+│   ├── routes/
+│   │   └── product.routes.js   # API route definitions
+│   ├── data/
+│   │   └── products.js         # Dummy product data
+│   ├── .env                    # Environment variables (MUST BE CREATED)
+│   ├── package.json
+│   ├── server.js               # Express server entry point
+│   └── seeder.js               # Script to populate the database
+│
+└── frontend/
+    ├── src/
+    │   ├── components/
+    │   │   ├── Navbar.js
+    │   │   └── Product.js
+    │   ├── context/
+    │   │   └── CartContext.js    # Global state for the cart
+    │   ├── pages/
+    │   │   ├── HomePage.js
+    │   │   ├── ProductPage.js
+    │   │   └── CartPage.js
+    │   ├── App.js                # Main component with React Router
+    │   ├── index.js              # Renders App, provides CartContext
+    │   └── index.css             # Global and responsive styles
+    └── package.json
+4. 🚀 Installation & Setup
+Prerequisites
+Node.js (v16 or later)
+
+NPM (comes with Node.js)
+
+A MongoDB Atlas account and a connection string.
+
+A. Backend Setup
+Navigate to the backend directory:
+
+Bash
+
+cd backend
+Install dependencies:
+
+Bash
+
+npm install
+Create a .env file in the backend root. This is critical.
+
+Code snippet
+
+MONGO_URI=mongodb+srv://<username>:<password>@cluster...
+PORT=5000
+Replace the MONGO_URI value with your own MongoDB Atlas connection string.
+
+B. Frontend Setup
+Open a new terminal and navigate to the frontend directory:
+
+Bash
+
+cd frontend
+Install dependencies:
+
+Bash
+
+npm install
+5. 💾 Database Seeding
+To populate your database with the provided dummy data:
+
+Ensure your .env file in the backend is correct.
+
+Run the seeder script from the backend directory:
+
+Bash
+
+# This DELETES all existing products and adds the new ones
+node seeder.js -import
+To clear the database, you can run:
+
+Bash
+
+node seeder.js -destroy
+6. 🏁 Running the Application
+You must run both servers simultaneously in two separate terminals.
+
+Terminal 1 (Backend):
+
+Bash
+
+cd backend
+node server.js
+Output: Server is running on port: 5000
+
+Terminal 2 (Frontend):
+
+Bash
+
+cd frontend
+npm start
+This will open the app in your browser at http://localhost:3000.
+
+7. 🔌 API Endpoints
+The backend serves a REST API at http://localhost:5000/api.
+
+Method	Endpoint	Description
+GET	/api/products	Retrieves a list of all products.
+GET	/api/products/:id	Retrieves a single product by its MongoDB _id.
+
+Export to Sheets
+
+8. ⚛️ Frontend Architecture
+Pages
+HomePage.js: Fetches all products from /api/products and displays them in a grid using the Product component.
+
+ProductPage.js: Fetches a single product using the URL parameter (:id) and displays its details.
+
+CartPage.js: Displays all items currently in the CartContext.
+
+State Management (CartContext.js)
+Global state management for the cart is handled via React's Context API to avoid "prop drilling."
+
+CartProvider: A wrapper component (in index.js) that holds the cart state.
+
+State: cartItems (Array of product objects with a quantity property).
+
+Functions:
+
+addToCart(product): Adds a product to the cartItems array. If the item already exists, it increments the quantity.
+
+removeFromCart(productId): Removes a product from the cartItems array by its ID.
+
+Usage: Components access the cart state by using the useContext(CartContext) hook.
